@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from os import PathLike
 
-from pytorch_lightning import LightningModule, Trainer
-from pytorch_lightning.callbacks import Callback
+from lightning.pytorch import LightningModule, Trainer
+from lightning.pytorch.callbacks import Callback
 
 from wandb_osh.hooks import TriggerWandbSyncHook, _comm_default_dir
 
