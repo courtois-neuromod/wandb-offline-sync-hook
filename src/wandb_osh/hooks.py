@@ -48,7 +48,6 @@ class TriggerWandbSyncHook:
         while command_file.is_file():
             logger.warning(
                 "Previous epoch has not yet fully synchronized, waiting ...",
-                command_file,
             )
             time.sleep(2)
         command_file.touch(exist_ok=True)
