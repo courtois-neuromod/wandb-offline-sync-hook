@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-
+import time
 import wandb
 
 from wandb_osh import __version__
@@ -45,11 +45,12 @@ class TriggerWandbSyncHook:
         # In case the communication dir was deleted since we initialized this class
         self.communication_dir.mkdir(parents=True, exist_ok=True)
         command_file = self.communication_dir / cmd_fname
-        if command_file.is_file():
+        while command_file.is_file():
             logger.warning(
-                "Syncing not active or too slow: Command %s file still exists",
+                "Previous epoch has not yet fully synchronized, waiting ...",
                 command_file,
             )
+            time.sleep(2)
         command_file.touch(exist_ok=True)
         command_file.write_text(trial_dir.resolve().as_posix())
         logger.debug("Wrote command file %s", command_file)
